@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Update Recipe</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h1>update</h1>
+   <ion-grid>
+    <ion-row class="ion-align-items-center">
+      <ion-col size="6">
+        
+          <img src="http://192.168.50.153:4000/images/{{imageSaved}}" alt="image"/>
+           
+      </ion-col>
+      <ion-col size="6">
+        <!--  <ion-button color="primary" fill="outline" (click)="takePhoto()">
+          <ion-icon slot="start" name="camera-outline"></ion-icon>
+          Take a photo
+        </ion-button>  -->
+        <ion-button color="primary" fill="outline" (click)="pickImage()">
+          <ion-icon slot="start" name="image-outline"></ion-icon>
+          Pick an image
+        </ion-button>
+          <ion-button color="danger" fill="outline" (click)="discardImage()">
+          <ion-icon slot="start" name="aperture"></ion-icon>
+          Discard image
+        </ion-button>  
+      </ion-col>
+    </ion-row> 
+  
+  </ion-grid>  
+  
+  <form [formGroup]="updateRecipeForm" (ngSubmit)="onSubmit()" novalidate>
+    <ion-item lines="full">
+      <ion-label position="floating">Tittle</ion-label>
+      <ion-input formControlName="tittle" type="text" required></ion-input>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.required">Tittle is required.</span>
+    <ion-item lines="full">
+      <ion-label position="floating">Category</ion-label>
+      <ion-input formControlName="category" type="text" required></ion-input>
+    </ion-item>
+    
+     
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.category.errors?.required">Category is required.</span>
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="primary" expand="block">Update</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+ <!--  <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+    <ion-grid>
+      <ion-row color="primary">
+        <ion-col size-md="6" size-lg="5" size-xs="12">
+       
+          <div  class="ion-text-center">
+            <ion-item>
+              <ion-input name="tittle" type="tittle" placeholder="Tittle" ngModel required></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input name="category" type="category" placeholder="Category" ngModel required></ion-input>
+            </ion-item>
+          </div>
+          <div  class="ion-text-center">
+            <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block">Update</ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+         
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form> -->
+</ion-content>
