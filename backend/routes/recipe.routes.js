@@ -6,7 +6,7 @@ module.exports = app => {
     var router = require("express").Router();
 
     // Create a new recipe
-    router.post("/", upload.single('file'), auth.isAuthenticated, recipes.create);
+    router.post("/", upload.single('file'), recipes.create);
 
     // Retrieve all recipes
     router.get("/", auth.isAuthenticated, recipes.findAll);
@@ -16,6 +16,9 @@ module.exports = app => {
 
     // Retrieve all recipes equals an id
     router.get("/user/:id", auth.isAuthenticated, recipes.findAllByUserId);
+
+    // Retrive categoryId of one recipe
+    router.get("/category/:id", auth.isAuthenticated, recipes.findCategory);
 
     // Update a recipe with id
     router.put("/:id", upload.single('file'), recipes.update);

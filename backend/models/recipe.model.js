@@ -3,11 +3,17 @@ module.exports = (sequelize, Sequelize) => {
     tittle: {
       type: Sequelize.STRING
     },
-    category: {
-      type: Sequelize.STRING
+    description: {
+      type: Sequelize.TEXT
     },
     filename: {
       type: Sequelize.STRING
+    },
+    userId: {
+      type: Sequelize.INTEGER
+    },
+    categoryId: {
+      type: Sequelize.INTEGER
     },
   },
   { timestamps: false }

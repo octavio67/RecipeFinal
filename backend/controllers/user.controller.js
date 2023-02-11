@@ -159,19 +159,6 @@ exports.update = (req, res) => {
 //     });
 // };
 
-// // Find all published Tutorials
-// exports.findAllPublished = (req, res) => {
-//   User.findAll({ where: { published: true } })
-//     .then(data => {
-//       res.send(data);
-//     })
-//     .catch(err => {
-//       res.status(500).send({
-//         message:
-//           err.message || "Some error occurred while retrieving tutorials."
-//       });
-//     });
-// };
 
 // Find user by username and password
 exports.findUserByUsernameAndPassword = (req, res) => {

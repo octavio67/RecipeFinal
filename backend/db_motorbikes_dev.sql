@@ -27,7 +27,7 @@ DROP TABLE IF EXISTS `recipes`;
 CREATE TABLE `recipes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `tittle` varchar(255) DEFAULT NULL,
-  `category` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
   `filename` varchar(255) DEFAULT NULL,
   -- `createdAt` datetime NOT NULL,
   -- `updatedAt` datetime NOT NULL,

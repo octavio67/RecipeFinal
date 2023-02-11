@@ -11,7 +11,7 @@ var storage = multer.diskStorage({
       if(file.mimetype === 'image/png') {
         filetype = 'png';
       }
-      if(file.mimetype === 'image/jpeg') {
+      if(file.mimetype === 'image/jpeg' ) {
         filetype = 'jpg';
       }
       cb(null, 'image-' + Date.now() + '.' + filetype);

@@ -35,8 +35,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Development only. Drops and re-sync db everytime the server starts.
   // db.sequelize.sync({ force: true }).then(() => {
-  //   console.log("Drop and re-sync db.");
-  // });
+   //  console.log("Drop and re-sync db.");
+   //});
 
 //middleware that checks if JWT token exists and verifies it if it does exist.
 //In all future routes, this helps to know if the request is authenticated or not.
@@ -73,8 +73,11 @@ app.use(function (req, res, next) {
   });
 });
 
+
 require("./routes/user.routes")(app);
 require("./routes/recipe.routes")(app);
+require("./routes/category.routes")(app);
+require("./routes/recipeIngredient.routes")(app);
 
 app.listen(port, () => {
   console.log('Server started on: ' + port);
