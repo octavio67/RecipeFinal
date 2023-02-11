@@ -31,7 +31,11 @@ const routes: Routes = [
   {
     path: 'update-recipe/:id',
     loadChildren: () => import('./update-recipe/update-recipe.module').then( m => m.UpdateRecipePageModule)
+  },  {
+    path: 'add-ingredient',
+    loadChildren: () => import('./add-ingredient/add-ingredient.module').then( m => m.AddIngredientPageModule)
   },
+
   
 
 

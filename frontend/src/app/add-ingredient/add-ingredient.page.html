@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Add-ingredient</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="ingredientForm" (ngSubmit)="submitIngredientForm()" novalidate>
+    <ion-item lines="full">
+      <ion-label position="floating">Unit</ion-label>
+      <ion-input formControlName="unit" type="text" required></ion-input>
+    </ion-item>
+
+    <!-- <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.required">Name is required.</span> -->
+    <ion-item lines="full">
+      <ion-label position="floating">Measure</ion-label>
+      <ion-input formControlName="measure" type="text" required></ion-input>
+    </ion-item>
+    <!-- <span class="error ion-padding" *ngIf="isSubmitted && errorControl.category.errors?.required">Category is required.</span> -->
+  
+    <ion-item lines="full">
+      <ion-label position="floating">Ingredient</ion-label>
+      <ion-input formControlName="ingredient" type="text" required></ion-input>
+    </ion-item>
+    <!-- <span class="error ion-padding" *ngIf="isSubmitted && errorControl.category.errors?.required">Category is required.</span> -->
+  
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="primary" expand="block">Create</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+
+</ion-content>

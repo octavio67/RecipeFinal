@@ -1,7 +1,8 @@
 export interface Recipe {
 	id: number;
 	tittle: string;
-	category: string;
+	description: string;
 	filename: string;
 	userid: number;
+	categoryId: number;
 }

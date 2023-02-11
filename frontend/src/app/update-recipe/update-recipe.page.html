@@ -8,74 +8,85 @@
 </ion-header>
 
 <ion-content>
-  <h1>update</h1>
    <ion-grid>
     <ion-row class="ion-align-items-center">
       <ion-col size="6">
         
-          <img src="http://192.168.50.153:4000/images/{{imageSaved}}" alt="image"/>
+           <img src="http://192.168.50.153:4000/images/{{imageSaved}}" alt="image"/>
+         <!-- <ion-img class="photo-frame" *ngIf="capturedPhoto" src="http://192.168.50.153:4000/images/{{capturedPhoto}}" (click)="takePhoto()"></ion-img> -->
+         <ion-img class="photo-frame" *ngIf="capturedPhoto" [src]="capturedPhoto" (click)="takePhoto()"></ion-img>
+         <!-- <ion-img class="photo-frame" *ngIf="!capturedPhoto" src="http://192.168.50.153:4000/images/nothing.jpg" -->
+           <!-- (click)="takePhoto()"></ion-img> -->
            
       </ion-col>
       <ion-col size="6">
-        <!--  <ion-button color="primary" fill="outline" (click)="takePhoto()">
+         <ion-button color="primary" (click)="takePhoto()">
           <ion-icon slot="start" name="camera-outline"></ion-icon>
           Take a photo
-        </ion-button>  -->
-        <ion-button color="primary" fill="outline" (click)="pickImage()">
+        </ion-button> 
+        <ion-button color="primary" (click)="pickImage()">
           <ion-icon slot="start" name="image-outline"></ion-icon>
           Pick an image
         </ion-button>
-          <ion-button color="danger" fill="outline" (click)="discardImage()">
+          <ion-button color="warning" (click)="discardImage()">
           <ion-icon slot="start" name="aperture"></ion-icon>
           Discard image
         </ion-button>  
       </ion-col>
     </ion-row> 
+  </ion-grid>
+
+  <ion-item lines="full">
+    <ion-select [(ngModel)]="categoryId" id="category" name="category" placeHolder="Select Category" (ionChange)="ObtenerCategoryId($event)">
+    <ion-select-option *ngFor="let category of categories" [value]="category.id">{{category.name}}</ion-select-option>
+    <ion-label position="floating" >{{categoryId}}</ion-label>
+  </ion-select>
+ 
+  </ion-item>
   
-  </ion-grid>  
   
   <form [formGroup]="updateRecipeForm" (ngSubmit)="onSubmit()" novalidate>
     <ion-item lines="full">
       <ion-label position="floating">Tittle</ion-label>
       <ion-input formControlName="tittle" type="text" required></ion-input>
     </ion-item>
-    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.required">Tittle is required.</span>
+    <!-- <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.required">Tittle is required.</span> -->
     <ion-item lines="full">
-      <ion-label position="floating">Category</ion-label>
-      <ion-input formControlName="category" type="text" required></ion-input>
+      <ion-label position="floating">Description</ion-label>
+      <ion-input formControlName="description" type="text" required></ion-input>
     </ion-item>
-    
-     
-    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.category.errors?.required">Category is required.</span>
+      
+    <!-- <span class="error ion-padding" *ngIf="isSubmitted && errorControl.description.errors?.required">Description is required.</span> -->
     <ion-row>
       <ion-col>
         <ion-button type="submit" color="primary" expand="block">Update</ion-button>
       </ion-col>
     </ion-row>
   </form>
- <!--  <form #form="ngForm" (ngSubmit)="onSubmit(form)">
-    <ion-grid>
-      <ion-row color="primary">
-        <ion-col size-md="6" size-lg="5" size-xs="12">
-       
-          <div  class="ion-text-center">
-            <ion-item>
-              <ion-input name="tittle" type="tittle" placeholder="Tittle" ngModel required></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-input name="category" type="category" placeholder="Category" ngModel required></ion-input>
-            </ion-item>
-          </div>
-          <div  class="ion-text-center">
-            <ion-button size="large" type="submit" [disabled]="form.invalid" expand="block">Update</ion-button>
-          </div>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-         
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </form> -->
+
+  <ion-list>
+    <ion-item *ngFor="let ingredient of ingredients">
+      <ion-label>
+        <p>{{ingredient.unit}} {{ingredient.measure}} {{ingredient.ingredient}}</p>
+
+        <!--  <ion-buttons>
+          <ion-button color="danger" (click)="deleteIngredient(ingredient.id)">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+          </ion-button>
+          <ion-button color="secondary" (click)="updateIngredient(Ingredient.id)">
+            <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+          </ion-button>
+          
+        </ion-buttons>  -->
+
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addIngredient()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  
 </ion-content>

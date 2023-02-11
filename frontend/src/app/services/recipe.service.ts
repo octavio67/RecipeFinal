@@ -1,92 +1,126 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Storage } from '@ionic/storage';
-import { Observable } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { Storage } from "@ionic/storage";
+import { Observable } from "rxjs";
 
 export class Recipe {
   id: number;
   tittle: string;
-  category: string;
+  description: string;
   filename: string;
   userId: number;
+  categoryId: number;
 }
 
+/* export class User {
+  id: number;
+  password: string;
+  username: string;
+  email: string;
+  isAdmin: boolean;
+
+} */
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class RecipeService {
-  endPoint = 'http://localhost:4000/api/recipes/';
+  usuario: any;
+  endPoint = "http://localhost:4000/api/recipes";
 
-  AUTH_SERVER_ADDRESS:  string  =  'http://localhost:4000';
+  AUTH_SERVER_ADDRESS: string = "http://localhost:4000";
 
-  constructor(private  httpClient:  HttpClient, private  storage:  Storage) { }
+  constructor(private httpClient: HttpClient, private storage: Storage) {}
 
-  private getOptions(token){
-
-    let bearerAccess = 'Bearer ' + token;
+  private getOptions(token) {
+    let bearerAccess = "Bearer " + token;
 
     let options = {
       headers: {
-        'Authorization' : bearerAccess,
+        Authorization: bearerAccess,
         // 'Content-Type' : 'application/x-www-form-urlencoded',
-        'Content-Type' : 'application/json',
-      }
+        "Content-Type": "application/json",
+      },
       //, withCredentials: true
     };
 
     return options;
   }
 
-
-  /*createRecipe(recipe, blob, token){
+  async createRecipe(id_user, recipe, blob, categoryId) {
+    id_user = await this.storage.get('id_user_st');
+    categoryId = await this.storage.get('categoryId_st');
     const formData = new FormData();
-    formData.append('name', recipe.name);
-    formData.append('category', recipe.category);
-    formData.append('file', blob);
+    formData.append("tittle", recipe.tittle);
+    formData.append("description", recipe.description);
+    formData.append("file", blob);
+    formData.append("userId", id_user);
+    formData.append("categoryId", categoryId);
 
+   //  let myOptions = this.getOptions(token);
+
+    return this.httpClient.post(this.endPoint, formData);
+   //   return this.httpClient.post(`${this.AUTH_SERVER_ADDRESS}/api/recipes`, formData, myOptions);
+  }
+
+  /*getRecipeCategoryId(id, token): Observable<Recipe[]> {
     let myOptions = this.getOptions(token);
-
-   // return this.httpClient.post(myOptions, formData);
-    return this.httpClient.post(`${this.AUTH_SERVER_ADDRESS}/api/recipes`, myOptions);
+    //  return this.httpClient.get<Recipe[]>(this.endPoint + '/' + id );
+    return this.httpClient.get<Recipe[]>(
+      `${this.AUTH_SERVER_ADDRESS}/api/recipes/category/` + id,
+      myOptions
+    );
   }*/
 
   getRecipe(id, token): Observable<Recipe[]> {
     let myOptions = this.getOptions(token);
-  //  return this.httpClient.get<Recipe[]>(this.endPoint + '/' + id );
-    return this.httpClient.get<Recipe[]>(`${this.AUTH_SERVER_ADDRESS}/api/recipes/` + id, myOptions);
+    //  return this.httpClient.get<Recipe[]>(this.endPoint + '/' + id );
+    return this.httpClient.get<Recipe[]>(
+      `${this.AUTH_SERVER_ADDRESS}/api/recipes/` + id,
+      myOptions
+    );
   }
 
   getMyRecipes(userId, token): Observable<Recipe[]> {
     let myOptions = this.getOptions(token);
-  //  return this.httpClient.get<Recipe[]>(this.endPoint + '/' + id );
-    return this.httpClient.get<Recipe[]>(`${this.AUTH_SERVER_ADDRESS}/api/recipes/user/` + userId, myOptions);
+    //  return this.httpClient.get<Recipe[]>(this.endPoint + '/' + id );
+    return this.httpClient.get<Recipe[]>(
+      `${this.AUTH_SERVER_ADDRESS}/api/recipes/user/` + userId,
+      myOptions
+    );
   }
 
   getRecipes(token): Observable<Recipe[]> {
     let myOptions = this.getOptions(token);
-    console.log(myOptions)
-    return this.httpClient.get<Recipe[]>(`${this.AUTH_SERVER_ADDRESS}/api/recipes/`, myOptions);
+    console.log(myOptions);
+    return this.httpClient.get<Recipe[]>(
+      `${this.AUTH_SERVER_ADDRESS}/api/recipes/`,
+      myOptions
+    );
   }
 
-  /*deleteRecipe(id) {
+  deleteRecipe(id, token) {
     let myOptions = this.getOptions(token);
    // return this.httpClient.delete<Recipe[]>(this.endPoint + '/' + id, this.httpOptions);
     return this.httpClient.delete(`${this.AUTH_SERVER_ADDRESS}/api/recipes/` + id, myOptions);
 
-  }*/
+  }
 
- /* deleteAllRecipes(): Observable<Recipe[]> {
+  /* deleteAllRecipes(): Observable<Recipe[]> {
     return this.httpClient.delete<Recipe[]>(this.endPoint);
   }*/
 
-  updateRecipe(id, recipe, blob) {
-   // let myOptions = this.getOptions(token);
+  async updateRecipe(id, recipe, blob, categoryId) {
+    // let myOptions = this.getOptions(token);
+   // categoryId = await this.storage.get('categoryId');
     const formData = new FormData();
     formData.append('tittle', recipe.tittle);
-    formData.append('category', recipe.category);
+    formData.append('description', recipe.description);
     formData.append('file', blob);
+    formData.append("categoryId", categoryId);
+  
 
-    return this.httpClient.put(this.endPoint + id, formData);
-   // return this.httpClient.put(`${this.AUTH_SERVER_ADDRESS}/api/recipes/` + id, formData, myOptions);
+    return this.httpClient.put(this.endPoint + "/" + id, formData);
+    // return this.httpClient.put(`${this.AUTH_SERVER_ADDRESS}/api/recipes/` + id, formData, myOptions);
   }
 }

@@ -16,11 +16,11 @@ import { AlertController } from '@ionic/angular';
 export class YouAreLoggedInPage implements OnInit {
 
   recipes: any =[];
-  userId: any;
- 
- 
+  id: any ;
+  username_user: any
+  recipeId: any;
   
-
+ 
   constructor(
     private authService: AuthService, 
     private router: Router,
@@ -29,25 +29,49 @@ export class YouAreLoggedInPage implements OnInit {
     public alertController: AlertController,
     private storage: Storage) { 
 
-      this.userId = this.activatedRoute.snapshot.paramMap.get('userId');
+    this.id = this.activatedRoute.snapshot.paramMap.get('id');
+    
     }
 
-  ngOnInit() {
-    this.getAllRecipes();
+ async ngOnInit() {
+  let username_user = await this.storage.get('username_user_st');
+  let id = await this.storage.get('id_user_st');
+  this.getMyRecipes(id);
+  console.log("You are logged in: " + username_user);
+
   }
 
-  ionViewDidEnter(){
-    this.getAllRecipes();
+  async ionViewDidEnter(){
+    let username_user = await this.storage.get('username_user_st');
+    let id = await this.storage.get('id_user_st');
+    this.getMyRecipes(id);
   }
 
-  async getAllRecipes() {
-    
+  /*async getAllRecipes() {
     let token = await this.storage.get("token");
-   // let name = await this.storage.set("name", this.user.username);
+    
     this.recipeService.getRecipes(token).subscribe(async res => {
 
       console.log(res);
       this.recipes = res;
+    }, error => {
+      console.log(error);
+      console.log("User not authenticated. Please log in");
+      this.router.navigateByUrl("/home");
+    });
+  }*/
+
+  async getMyRecipes(id) {
+    let token = await this.storage.get("token");
+    
+    this.recipeService.getMyRecipes(id, token).subscribe(async res => {
+
+      console.log(res);
+      this.recipes = res;
+      this.recipeId = await  this.storage.set(
+        "recipeIdForIngredients_st",
+        JSON.stringify(res["id"])
+      );
     }, error => {
       console.log(error);
       console.log("User not authenticated. Please log in");
@@ -62,7 +86,8 @@ export class YouAreLoggedInPage implements OnInit {
   }
 
 
-/*  async deleteRecipe(id) {
+  async deleteRecipe(id) {
+    let token = await this.storage.get("token");
     const alert = await this.alertController.create({
       header: 'Cuidado!',
       subHeader: 'La Receta con id:' + id + ' será eliminada',
@@ -81,7 +106,7 @@ export class YouAreLoggedInPage implements OnInit {
           role: 'confirm',
           cssClass: 'alert-button-confirm',
           handler: () => {
-            this.recipeService.deleteRecipe(id).subscribe(() => {
+            this.recipeService.deleteRecipe(id, token).subscribe(() => {
               console.log('Receta con id:' + id + ' borrada');
               this.ionViewDidEnter();
             });
@@ -90,7 +115,7 @@ export class YouAreLoggedInPage implements OnInit {
       ],
     });
     await alert.present();
-  }*/
+  }
 
 
   updateRecipe(id) {
@@ -100,7 +125,8 @@ export class YouAreLoggedInPage implements OnInit {
 
    addRecipe(){
     this.ionViewDidEnter();
-    this.router.navigateByUrl(`/add-recipe`);
+    this.router.navigateByUrl('/add-recipe');
+    
   }
 
 }

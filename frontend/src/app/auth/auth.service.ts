@@ -42,6 +42,8 @@ export class AuthService {
         console.log(user);
         if (res.user) {
           await this.storage.set("token", res.access_token);
+          await this.storage.set("id_user_st", res.user.id);
+          await this.storage.set("username_user_st", res.user.username);
         }
       })
 
@@ -54,10 +56,8 @@ export class AuthService {
 
         if (res.user) {
           await this.storage.set("token", res.access_token);
-          this.storage.set("name", res.user.username);
-        /*   await this.storage.set("name", res.user.username).then((name) => {
-            this.nombre = name; 
-          });*/
+          await this.storage.set("id_user_st", res.user.id);
+          await this.storage.set("username_user_st", res.user.username);
         }
       })
     );
@@ -65,6 +65,8 @@ export class AuthService {
 
   async logout() {
     await this.storage.remove("token");
+    await this.storage.remove("id_user_st")
+    await this.storage.remove("username_user_st");
   }
 
   async isLoggedIn() {

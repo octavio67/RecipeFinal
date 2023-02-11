@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      You are logged in
+    <ion-title id="nombre">
+      You are logged in {{username_user}}
       <ion-button (click)="logout()" class="my_button">Log out</ion-button>
     </ion-title>
   </ion-toolbar>
@@ -10,20 +10,21 @@
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let recipe of recipes">
-      <ion-avatar slot="start">
+      <ion-thumbnail slot="start">
         <img *ngIf="recipe.filename" src="http://192.168.50.153:4000/images/{{recipe.filename}}" alt="image"/>
-      </ion-avatar>
+      </ion-thumbnail>
       <ion-label>
         <h1>{{recipe.tittle}}</h1>
-        <p>{{recipe.category}}</p>
+        <p>{{recipe.description}}</p>
 
          <ion-buttons>
-          <!-- <ion-button color="danger" (click)="deleteRecipe(recipe.id)">
+          <ion-button color="danger" (click)="deleteRecipe(recipe.id)">
             <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-          </ion-button> -->
+          </ion-button>
           <ion-button color="secondary" (click)="updateRecipe(recipe.id)">
             <ion-icon slot="icon-only" name="create-outline"></ion-icon>
           </ion-button>
+          
         </ion-buttons> 
 
       </ion-label>

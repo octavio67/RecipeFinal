@@ -8,47 +8,79 @@
 </ion-header>
 
 <ion-content>
-<h1>Add Recipe</h1>
-  <!-- <ion-grid>
+   <ion-grid>
     <ion-row class="ion-align-items-center">
       <ion-col size="6">
         <ion-img class="photo-frame" *ngIf="capturedPhoto" [src]="capturedPhoto" (click)="takePhoto()"></ion-img>
-        <ion-img class="photo-frame" *ngIf="!capturedPhoto" src="http://192.168.1.67:8080/images/nothing.jpg"
+        <ion-img class="photo-frame" *ngIf="!capturedPhoto" src="http://192.168.50.153:4000/images/nothing.jpg"
           (click)="takePhoto()"></ion-img>
       </ion-col>
       <ion-col size="6">
-        <ion-button color="primary" fill="outline" (click)="takePhoto()">
+        <ion-button color="primary" (click)="takePhoto()">
           <ion-icon slot="start" name="camera-outline"></ion-icon>
           Take a photo
         </ion-button>
-        <ion-button color="primary" fill="outline" (click)="pickImage()">
+        <ion-button color="primary" (click)="pickImage()">
           <ion-icon slot="start" name="image-outline"></ion-icon>
           Pick an image
         </ion-button>
-        <ion-button color="danger" fill="outline" (click)="discardImage()">
+        <ion-button color="warning"  (click)="discardImage()">
           <ion-icon slot="start" name="aperture"></ion-icon>
           Discard image
         </ion-button>
       </ion-col>
     </ion-row>
-  </ion-grid> -->
+  </ion-grid>
 
-  <!-- <form [formGroup]="recipeForm" (ngSubmit)="submitForm()" novalidate>
+  <ion-item lines="full">
+  <ion-select  id="category" name="category" placeHolder="Select Category" (ionChange)="ObtenerCategoryId($event)">
+  <ion-select-option *ngFor="let category of categories; let i=index" value="{{category.id}}">{{category.name}}</ion-select-option>
+</ion-select>
+</ion-item>
+
+   <form [formGroup]="recipeForm" (ngSubmit)="submitForm()" novalidate>
     <ion-item lines="full">
-      <ion-label position="floating">Name</ion-label>
-      <ion-input formControlName="name" type="text" required></ion-input>
+      <ion-label position="floating">Tittle</ion-label>
+      <ion-input formControlName="tittle" type="text" required></ion-input>
     </ion-item>
-    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.required">Name is required.</span>
+
+    <!-- <span class="error ion-padding" *ngIf="isSubmitted && errorControl.name.errors?.required">Name is required.</span> -->
     <ion-item lines="full">
-      <ion-label position="floating">Category</ion-label>
-      <ion-input formControlName="category" type="text" required></ion-input>
+      <ion-label position="floating">Description</ion-label>
+      <ion-input formControlName="description" type="text" required></ion-input>
     </ion-item>
-    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.category.errors?.required">Category is required.</span>
+    <!-- <span class="error ion-padding" *ngIf="isSubmitted && errorControl.category.errors?.required">Category is required.</span> -->
+  
     <ion-row>
       <ion-col>
-        <ion-button type="submit" color="primary" expand="block">Submit</ion-button>
+        <ion-button type="submit" color="primary" expand="block">Create</ion-button>
       </ion-col>
     </ion-row>
   </form>
-   -->
+
+ <!--  <ion-list>
+    <ion-item *ngFor="let ingredient of ingredients">
+      <ion-label>
+        <p>{{ingredient.unit}} {{ingredient.measure}} {{ingredient.ingredient}}</p>
+
+         <ion-buttons>
+          <ion-button color="danger" (click)="deleteIngredient(ingredient.id)">
+            <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+          </ion-button>
+          <ion-button color="secondary" (click)="updateIngredient(Ingredient.id)">
+            <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+          </ion-button>
+          
+        </ion-buttons> 
+
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addIngredient()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab> -->
+ 
 </ion-content>
